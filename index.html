@@ -81,12 +81,24 @@
 <body>
   <div class="container">
     <h1>롤 5:5 랜덤 팀 나누기</h1>
-    <p>닉네임을 한 줄에 하나씩 입력하세요 (총 10명)</p>
-    <textarea id="players" placeholder="플레이어1
-플레이어2
-플레이어3
-..."></textarea>
+    <p>포지션별로 닉네임을 입력하세요 (각 포지션 2명)</p>
+    <textarea id="top" placeholder="TOP
+탑유저1
+탑유저2"></textarea>
+    <textarea id="jungle" placeholder="JUNGLE
+정글유저1
+정글유저2"></textarea>
+    <textarea id="mid" placeholder="MID
+미드유저1
+미드유저2"></textarea>
+    <textarea id="adc" placeholder="ADC
+원딜유저1
+원딜유저2"></textarea>
+    <textarea id="support" placeholder="SUPPORT
+서폿유저1
+서폿유저2"></textarea>
     <button onclick="makeTeams()">랜덤 팀 생성</button>
+    <button onclick="reshuffle()" style="background:#334155; margin-top:8px;">다시 섞기</button>
 
     <div class="teams" id="result" style="display:none;">
       <div class="team">
@@ -101,6 +113,8 @@
   </div>
 
   <script>
+    let lastPlayers = {};
+
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -109,20 +123,53 @@
     }
 
     function makeTeams() {
-      const input = document.getElementById('players').value.trim();
-      const players = input.split('\n').map(p => p.trim()).filter(p => p);
+      const positions = ['top','jungle','mid','adc','support'];
+      const playersByPos = {};
 
-      if (players.length !== 10) {
-        alert('플레이어는 정확히 10명이어야 합니다!');
-        return;
+      for (const pos of positions) {
+        const input = document.getElementById(pos).value.trim();
+        const players = input.split('
+').map(p => p.trim()).filter(p => p && !p.toUpperCase().includes(pos.toUpperCase()));
+        if (players.length !== 2) {
+          alert(pos.toUpperCase() + ' 포지션은 정확히 2명이어야 합니다!');
+          return;
+        }
+        playersByPos[pos] = players;
       }
 
-      shuffle(players);
+      lastPlayers = JSON.parse(JSON.stringify(playersByPos));
+      generateTeams(playersByPos);
+    }
 
-      const teamA = players.slice(0, 5);
-      const teamB = players.slice(5, 10);
+      lastPlayers = [...players];
+      generateTeams(players);
+    }
+
+    function reshuffle() {
+      if (!lastPlayers.top) {
+        alert('먼저 팀을 생성해주세요!');
+        return;
+      }
+      generateTeams(JSON.parse(JSON.stringify(lastPlayers)));
+    }
+      generateTeams([...lastPlayers]);
+    }
+
+    function generateTeams(playersByPos) {
+      const teamA = [];
+      const teamB = [];
+
+      for (const pos in playersByPos) {
+        shuffle(playersByPos[pos]);
+        teamA.push(`${pos.toUpperCase()}: ${playersByPos[pos][0]}`);
+        teamB.push(`${pos.toUpperCase()}: ${playersByPos[pos][1]}`);
+      }
 
       document.getElementById('teamA').innerHTML = teamA.map(p => `<li>${p}</li>`).join('');
+      document.getElementById('teamB').innerHTML = teamB.map(p => `<li>${p}</li>`).join('');
+
+      document.getElementById('result').style.display = 'flex';
+    }</li>`).join('');
       document.getElementById('teamB').innerHTML = teamB.map(p => `<li>${p}</li>`).join('');
 
       document.getElementById('result').style.display = 'flex';
