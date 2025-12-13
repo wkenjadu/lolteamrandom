@@ -113,7 +113,7 @@
   </div>
 
   <script>
-    let lastPlayers = {};
+    let lastPlayers = null;
 
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -122,56 +122,53 @@
       }
     }
 
-    function makeTeams() {
-      const positions = ['top','jungle','mid','adc','support'];
-      const playersByPos = {};
-
-      for (const pos of positions) {
-        const input = document.getElementById(pos).value.trim();
-        const players = input.split('
-').map(p => p.trim()).filter(p => p && !p.toUpperCase().includes(pos.toUpperCase()));
-        if (players.length !== 2) {
-          alert(pos.toUpperCase() + ' 포지션은 정확히 2명이어야 합니다!');
-          return;
-        }
-        playersByPos[pos] = players;
-      }
-
-      lastPlayers = JSON.parse(JSON.stringify(playersByPos));
-      generateTeams(playersByPos);
+    function readPlayers(id) {
+      return document
+        .getElementById(id)
+        .value
+        .split('
+')
+        .map(v => v.trim())
+        .filter(v => v.length > 0);
     }
 
-      lastPlayers = [...players];
-      generateTeams(players);
+    function makeTeams() {
+      const positions = ['top', 'jungle', 'mid', 'adc', 'support'];
+      const data = {};
+
+      for (const pos of positions) {
+        const players = readPlayers(pos);
+        if (players.length !== 2) {
+          alert(pos.toUpperCase() + ' 포지션은 정확히 2명이어야 합니다');
+          return;
+        }
+        data[pos] = players;
+      }
+
+      lastPlayers = JSON.parse(JSON.stringify(data));
+      generateTeams(data);
     }
 
     function reshuffle() {
-      if (!lastPlayers.top) {
-        alert('먼저 팀을 생성해주세요!');
+      if (!lastPlayers) {
+        alert('먼저 팀을 생성해주세요');
         return;
       }
       generateTeams(JSON.parse(JSON.stringify(lastPlayers)));
     }
-      generateTeams([...lastPlayers]);
-    }
 
-    function generateTeams(playersByPos) {
+    function generateTeams(data) {
       const teamA = [];
       const teamB = [];
 
-      for (const pos in playersByPos) {
-        shuffle(playersByPos[pos]);
-        teamA.push(`${pos.toUpperCase()}: ${playersByPos[pos][0]}`);
-        teamB.push(`${pos.toUpperCase()}: ${playersByPos[pos][1]}`);
+      for (const pos in data) {
+        shuffle(data[pos]);
+        teamA.push(`${pos.toUpperCase()}: ${data[pos][0]}`);
+        teamB.push(`${pos.toUpperCase()}: ${data[pos][1]}`);
       }
 
-      document.getElementById('teamA').innerHTML = teamA.map(p => `<li>${p}</li>`).join('');
-      document.getElementById('teamB').innerHTML = teamB.map(p => `<li>${p}</li>`).join('');
-
-      document.getElementById('result').style.display = 'flex';
-    }</li>`).join('');
-      document.getElementById('teamB').innerHTML = teamB.map(p => `<li>${p}</li>`).join('');
-
+      document.getElementById('teamA').innerHTML = teamA.map(v => `<li>${v}</li>`).join('');
+      document.getElementById('teamB').innerHTML = teamB.map(v => `<li>${v}</li>`).join('');
       document.getElementById('result').style.display = 'flex';
     }
   </script>
