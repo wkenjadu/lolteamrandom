@@ -69,40 +69,22 @@ function shuffleTeams() {
   ];
 
   for (const [key,a,b] of roles) {
-    const p1 = document.getElementById(a).value.trim();
-    const p2 = document.getElementById(b).value.trim();
-    if (!p1 || !p2) { alert('모든 포지션에 2명씩 입력하세요'); return; }
+    const p1 = document.getElementById(a).value;
+    const p2 = document.getElementById(b).value;
 
-    const rCell = document.getElementById('r_'+key);
-    const bCell = document.getElementById('b_'+key);
-
-    rCell.classList.remove('fade');
-    bCell.classList.remove('fade');
-
-    if (Math.random() < 0.5) {
-      rCell.innerText = p1;
-      bCell.innerText = p2;
-    } else {
-      rCell.innerText = p2;
-      bCell.innerText = p1;
+    if (!p1 || !p2) {
+      alert('모든 포지션에 2명씩 입력하세요');
+      return;
     }
 
-    // 애니메이션 재적용
-    void rCell.offsetWidth;
-    rCell.classList.add('fade');
-    bCell.classList.add('fade');
+    document.getElementById('r_'+key).textContent = p1;
+    document.getElementById('b_'+key).textContent = p2;
   }
-}
-    if (Math.random() < 0.5) {
-      document.getElementById('r_'+key).innerText = p1;
-      document.getElementById('b_'+key).innerText = p2;
-    } else {
-      document.getElementById('r_'+key).innerText = p2;
-      document.getElementById('b_'+key).innerText = p1;
-    }
-  }
+
+  alert('결과 출력 완료');
 }
 </script>
+
 
 </body>
 </html>
