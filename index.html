@@ -4,35 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>롤 랜덤팀 섞기</title>
-  <style>
-body {
-  font-family: Arial, sans-serif;
-  background:#f3f4f6;
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background:#f3f4f6;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-  min-height: 100vh;
-  margin: 0;
+  .wrap {
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+    justify-content:center;
+    transform: translateY(40px);
+  }
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  table { border-collapse: collapse; min-width:260px; }
+  th, td { border:1px solid #000; padding:8px 12px; text-align:center; font-weight:bold; }
+  th { background:#e5e7eb; }
+  .red { background:#fca5a5; }
+  .blue { background:#93c5fd; }
+  button { padding:14px 30px; font-size:16px; font-weight:bold; cursor:pointer; }
+</style>
 
-    .wrap { display:flex; gap:40px; align-items:flex-start; justify-content:center; }
-    table { border-collapse: collapse; min-width:260px; }
-    th, td { border:1px solid #000; padding:8px 12px; text-align:center; font-weight:bold; }
-    th { background:#e5e7eb; }
-    .red { background:#fca5a5; }
-    .blue { background:#93c5fd; }
-    .result { background:#bfdbfe; }
-    button { padding:14px 30px; font-size:16px; font-weight:bold; cursor:pointer; }
-    .fade {
-      animation: fadeSwap 0.6s ease-in-out;
-    }
-    @keyframes fadeSwap {
-      0% { opacity: 0; transform: translateY(-6px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
 </head>
 <body>
 
