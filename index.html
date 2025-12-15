@@ -111,6 +111,45 @@
     button:active {
       transform: scale(0.97);
     }
+      @media (max-width: 768px) {
+      body {
+        align-items: flex-start;
+        padding: 20px 0;
+      }
+
+      .wrap {
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        align-items: center;
+      }
+
+      table {
+        min-width: unset;
+        width: 92%;
+      }
+
+      th, td {
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+
+      input {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+
+      .center-btn {
+        width: 100%;
+      }
+
+      button {
+        width: 90%;
+        max-width: 360px;
+        font-size: 20px;
+        padding: 22px 0;
+      }
+    }
   </style>
 </head>
 
