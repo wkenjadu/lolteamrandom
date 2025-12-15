@@ -1,166 +1,98 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>롤 5:5 랜덤팀 나누기</title>
+<meta charset="UTF-8">
+<title>롤 5:5 랜덤 팀</title>
 
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(37,99,235,0.15), transparent 40%),
-        radial-gradient(circle at bottom, rgba(250,204,21,0.08), transparent 45%),
-        linear-gradient(180deg, #020617, #000);
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #020617, #000);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .wrap {
-      display: flex;
-      gap: 60px;
-      align-items: center;
-    }
+/* 전체 레이아웃 */
+.wrap {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
 
-    table {
-      border-collapse: collapse;
-      min-width: 280px;
-      background: linear-gradient(180deg, #020617, #0b1220);
-      border: 1px solid #1e293b;
-      box-shadow:
-        inset 0 0 0 1px rgba(255,215,0,0.08),
-        0 20px 60px rgba(0,0,0,.8);
-    }
+/* 테이블 */
+table {
+  border-collapse: collapse;
+  min-width: 300px;
+  background: linear-gradient(180deg, #020617, #0f172a);
+  box-shadow: 0 20px 60px rgba(0,0,0,.7);
+}
 
-    th, td {
-      border: 1px solid #1e293b;
-      padding: 10px 14px;
-      text-align: center;
-      font-weight: bold;
-      color: #e5e7eb;
-    }
+th, td {
+  border: 1px solid #334155;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #e5e7eb;
+}
 
-    th {
-      background: linear-gradient(180deg, #0f172a, #020617);
-      color: #facc15;
-      letter-spacing: 1px;
-      font-size: 14px;
-      text-shadow: 0 0 6px rgba(250,204,21,.4);
-    }
+th {
+  background: #020617;
+}
 
-    input {
-      background: linear-gradient(180deg, #020617, #020617);
-      border: 1px solid #1e293b;
-      color: #e5e7eb;
-      padding: 8px 12px;
-      border-radius: 10px;
-      width: 100%;
-      box-sizing: border-box;
-      font-weight: bold;
-      text-align: center;
-      transition: all .2s ease;
-    }
+/* 입력창 */
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #e5e7eb;
+}
 
-    input:focus {
-      outline: none;
-      border-color: #facc15;
-      box-shadow:
-        0 0 0 1px rgba(250,204,21,.8),
-        0 0 14px rgba(250,204,21,.6);
-    }
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
 
-    .red {
-      background: linear-gradient(180deg, #7f1d1d, #450a0a);
-      color: #fecaca;
-    }
+/* 버튼 */
+.center-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .blue {
-      background: linear-gradient(180deg, #1e3a8a, #020617);
-      color: #bfdbfe;
-    }
+button {
+  padding: 26px 50px;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #e5e7eb;
+  border: 3px solid #facc15;
+  border-radius: 20px;
+  box-shadow: 0 0 35px rgba(37,99,235,0.7);
+}
 
-    .center-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+button:hover {
+  transform: scale(1.05);
+}
 
-    button {
-      padding: 28px 54px;
-      font-size: 24px;
-      font-weight: 900;
-      cursor: pointer;
-      background: linear-gradient(135deg, #1e3a8a, #2563eb);
-      color: #e5e7eb;
-      border: 3px solid #facc15;
-      border-radius: 22px;
-      box-shadow:
-        0 0 30px rgba(37,99,235,0.8),
-        inset 0 0 10px rgba(250,204,21,.25);
-      transition: all .2s ease;
-    }
-
-    button:hover {
-      transform: scale(1.06);
-      box-shadow:
-        0 0 45px rgba(37,99,235,1),
-        inset 0 0 14px rgba(250,204,21,.4);
-    }
-
-    button:active {
-      transform: scale(0.97);
-    }
-      @media (max-width: 768px) {
-      body {
-        align-items: flex-start;
-        padding: 20px 0;
-      }
-
-      .wrap {
-        flex-direction: column;
-        gap: 30px;
-        width: 100%;
-        align-items: center;
-      }
-
-      table {
-        min-width: unset;
-        width: 92%;
-      }
-
-      th, td {
-        padding: 10px 8px;
-        font-size: 13px;
-      }
-
-      input {
-        font-size: 14px;
-        padding: 10px 12px;
-      }
-
-      .center-btn {
-        width: 100%;
-      }
-
-      button {
-        width: 90%;
-        max-width: 360px;
-        font-size: 20px;
-        padding: 22px 0;
-      }
-    }
-  </style>
+/* 결과 색 */
+.red { background:#7f1d1d; }
+.blue { background:#1e3a8a; }
+</style>
 </head>
 
 <body>
+
 <div class="wrap">
 
-  <!-- 입력 테이블 -->
+  <!-- 입력 -->
   <table>
     <tr><th colspan="3">멤버 적는곳</th></tr>
     <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
@@ -170,14 +102,18 @@
     <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
   </table>
 
-  <!-- 중앙 버튼 -->
+  <!-- 버튼 -->
   <div class="center-btn">
     <button onclick="shuffleTeams()">🎲 랜덤 섞기</button>
   </div>
 
-  <!-- 결과 테이블 -->
+  <!-- 결과 -->
   <table>
-    <tr><th></th><th class="red">레드</th><th class="blue">블루</th></tr>
+    <tr>
+      <th></th>
+      <th class="red">레드</th>
+      <th class="blue">블루</th>
+    </tr>
     <tr><th>탑</th><td id="r_top"></td><td id="b_top"></td></tr>
     <tr><th>정글</th><td id="r_jg"></td><td id="b_jg"></td></tr>
     <tr><th>미드</th><td id="r_mid"></td><td id="b_mid"></td></tr>
@@ -206,18 +142,16 @@ function shuffleTeams() {
       return;
     }
 
-    const r = document.getElementById('r_' + key);
-    const bl = document.getElementById('b_' + key);
-
     if (Math.random() < 0.5) {
-      r.textContent = p1;
-      bl.textContent = p2;
+      document.getElementById('r_' + key).textContent = p1;
+      document.getElementById('b_' + key).textContent = p2;
     } else {
-      r.textContent = p2;
-      bl.textContent = p1;
+      document.getElementById('r_' + key).textContent = p2;
+      document.getElementById('b_' + key).textContent = p1;
     }
   }
 }
 </script>
+
 </body>
 </html>
