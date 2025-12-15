@@ -5,9 +5,30 @@
 <title>롤CK 랜덤 팀</title>
 
 <style>
+/* ===== 테마 변수 ===== */
+:root {
+  --bg-main: radial-gradient(circle at top, #020617, #000);
+  --table-bg: linear-gradient(180deg, #020617, #0f172a);
+  --border: #334155;
+  --text: #e5e7eb;
+  --th-bg: #020617;
+  --input-bg: #020617;
+}
+
+/* 🌞 라이트 모드 */
+body.light {
+  --bg-main: linear-gradient(180deg, #f8fafc, #e5e7eb);
+  --table-bg: #ffffff;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --th-bg: #e5e7eb;
+  --input-bg: #ffffff;
+}
+
+/* ===== 기본 ===== */
 body {
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #020617, #000);
+  background: var(--bg-main);
   min-height: 100vh;
   margin: 0;
   display: flex;
@@ -15,9 +36,10 @@ body {
   align-items: center;
   overflow: hidden;
   position: relative;
+  color: var(--text);
 }
 
-/* 🔮 배경 연기 효과 */
+/* 🔮 배경 연기 */
 body::before,
 body::after {
   content: "";
@@ -26,22 +48,22 @@ body::after {
   background:
     radial-gradient(circle at 30% 40%, rgba(59,130,246,0.08), transparent 40%),
     radial-gradient(circle at 70% 60%, rgba(99,102,241,0.07), transparent 45%);
-  animation: smokeMove 18s linear infinite;
+  animation: smokeMove 20s linear infinite;
   pointer-events: none;
 }
 
 body::after {
-  animation-duration: 26s;
+  animation-duration: 30s;
   opacity: 0.6;
 }
 
 @keyframes smokeMove {
-  0%   { transform: translate(0,0) scale(1); }
-  50%  { transform: translate(-5%, -8%) scale(1.05); }
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-5%, -8%) scale(1.05); }
   100% { transform: translate(0,0) scale(1); }
 }
 
-/* 전체 레이아웃 */
+/* ===== 레이아웃 ===== */
 .wrap {
   display: flex;
   gap: 50px;
@@ -50,44 +72,38 @@ body::after {
   z-index: 2;
 }
 
-/* 테이블 */
+/* ===== 테이블 ===== */
 table {
   border-collapse: collapse;
   min-width: 300px;
-  background: linear-gradient(180deg, #020617, #0f172a);
-  box-shadow: 0 20px 60px rgba(0,0,0,.7);
+  background: var(--table-bg);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
 }
 
 th, td {
-  border: 1px solid #334155;
+  border: 1px solid var(--border);
   padding: 10px;
   text-align: center;
   font-weight: bold;
-  color: #e5e7eb;
+  color: var(--text);
 }
 
 th {
-  background: #020617;
+  background: var(--th-bg);
 }
 
-/* 입력창 */
+/* ===== 입력 ===== */
 input {
   width: 100%;
   box-sizing: border-box;
   padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid #334155;
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
 }
 
-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 1px #3b82f6;
-}
-
-/* 버튼 */
+/* ===== 버튼 ===== */
 .center-btn {
   display: flex;
   justify-content: center;
@@ -104,12 +120,23 @@ button {
   border: 3px solid #facc15;
   border-radius: 20px;
   box-shadow: 0 0 35px rgba(37,99,235,0.7);
-  transition: transform .15s ease, box-shadow .15s ease;
 }
 
 button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 45px rgba(59,130,246,.9);
+}
+
+/* 🌗 모드 토글 버튼 */
+.mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 3;
 }
 
 /* 결과 색 */
@@ -119,6 +146,9 @@ button:hover {
 </head>
 
 <body>
+
+<!-- 🌗 모드 버튼 -->
+<button class="mode-toggle" onclick="toggleMode()">🌙 다크</button>
 
 <div class="wrap">
 
@@ -166,20 +196,25 @@ function shuffleTeams() {
   for (const [key,a,b] of roles) {
     const p1 = document.getElementById(a).value.trim();
     const p2 = document.getElementById(b).value.trim();
-
-    if (!p1 || !p2) {
-      alert('모든 포지션에 2명씩 입력하세요');
-      return;
-    }
+    if (!p1 || !p2) return alert('모든 포지션에 2명씩 입력하세요');
 
     if (Math.random() < 0.5) {
-      document.getElementById('r_' + key).textContent = p1;
-      document.getElementById('b_' + key).textContent = p2;
+      r(key).textContent = p1;
+      b(key).textContent = p2;
     } else {
-      document.getElementById('r_' + key).textContent = p2;
-      document.getElementById('b_' + key).textContent = p1;
+      r(key).textContent = p2;
+      b(key).textContent = p1;
     }
   }
+}
+const r = k => document.getElementById('r_'+k);
+const b = k => document.getElementById('b_'+k);
+
+/* 🌗 모드 전환 */
+function toggleMode() {
+  document.body.classList.toggle('light');
+  document.querySelector('.mode-toggle').textContent =
+    document.body.classList.contains('light') ? '🌞 라이트' : '🌙 다크';
 }
 </script>
 
