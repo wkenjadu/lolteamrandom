@@ -18,7 +18,7 @@
     .wrap {
       display:flex;
       gap:60px;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
     }
     table {
@@ -27,14 +27,19 @@
       background: linear-gradient(180deg, #020617, #0f172a);
       box-shadow: 0 20px 60px rgba(0,0,0,.7);
     }
-    th, td { border:1px solid #334155; padding:8px 12px; text-align:center; font-weight:bold; color:#e5e7eb; }
+    th, td {
+      border:1px solid #334155;
+      padding:8px 12px;
+      text-align:center;
+      font-weight:bold;
+      color:#e5e7eb;
+    }
     th {
       background:#020617;
-      color:#e5e7eb;
       letter-spacing:1px;
     }
     input {
-      background: linear-gradient(180deg, #020617, #020617);
+      background:#020617;
       border:1px solid #334155;
       color:#e5e7eb;
       padding:8px 10px;
@@ -48,6 +53,14 @@
     }
     .red { background:#7f1d1d; }
     .blue { background:#1e3a8a; }
+
+    .center-btn {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding-top:120px; /* 미드 높이 기준 */
+    }
+
     button {
       padding: 28px 54px;
       font-size: 24px;
@@ -61,18 +74,9 @@
     }
     button:hover {
       transform: scale(1.07);
-      box-shadow: 0 16px 40px rgba(37,99,235,0.75);
     }
     button:active {
       transform: scale(0.97);
-    }
-  </style>
-
-    .center-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 10px;
     }
   </style>
 </head>
@@ -84,24 +88,15 @@
     <tr><th colspan="3">멤버 적는곳</th></tr>
     <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
     <tr><th>정글</th><td><input id="jg1"></td><td><input id="jg2"></td></tr>
-    <tr id="mid-row">
-      <th>미드</th>
-      <td><input id="mid1"></td>
-      <td><input id="mid2"></td>
-    </tr>
+    <tr><th>미드</th><td><input id="mid1"></td><td><input id="mid2"></td></tr>
     <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
     <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
   </table>
 
   <!-- 중앙 버튼 -->
-  <div id="centerBtn" class="center-btn">
+  <div class="center-btn">
     <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
   </div>
-
-  <table>
-    <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
-    <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
-  </table>
 
   <!-- 결과 테이블 -->
   <table>
@@ -115,24 +110,6 @@
 </div>
 
 <script>
-function alignButtonToMid() {
-  const midRow = document.getElementById('mid-row');
-  const btn = document.getElementById('centerBtn');
-  if (!midRow || !btn) return;
-
-  const midRect = midRow.getBoundingClientRect();
-  const wrapRect = document.querySelector('.wrap').getBoundingClientRect();
-
-  const centerY = midRect.top + midRect.height / 2;
-  const offset = centerY - wrapRect.top - btn.offsetHeight / 2;
-
-  btn.style.marginTop = offset + 'px';
-}
-
-window.addEventListener('load', alignButtonToMid);
-window.addEventListener('resize', alignButtonToMid);
-
-
 function shuffleTeams() {
   const roles = [
     ['top','top1','top2'],
