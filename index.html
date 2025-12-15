@@ -44,6 +44,12 @@
     button:active {
       transform: scale(0.98);
     }
+
+    .center-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -54,16 +60,19 @@
     <tr><th colspan="3">멤버 적는곳</th></tr>
     <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
     <tr><th>정글</th><td><input id="jg1"></td><td><input id="jg2"></td></tr>
-    <tr>
+    <tr id="mid-row">
       <th>미드</th>
       <td><input id="mid1"></td>
       <td><input id="mid2"></td>
     </tr>
-    <tr>
-      <td colspan="3" style="text-align:center; padding:18px;">
-        <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
-      </td>
-    </tr>
+    </table>
+
+  <!-- 중앙 버튼 -->
+  <div id="centerBtn" class="center-btn">
+    <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
+  </div>
+
+  <table>
     <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
     <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
   </table>
@@ -80,6 +89,24 @@
 </div>
 
 <script>
+function alignButtonToMid() {
+  const midRow = document.getElementById('mid-row');
+  const btn = document.getElementById('centerBtn');
+  if (!midRow || !btn) return;
+
+  const midRect = midRow.getBoundingClientRect();
+  const wrapRect = document.querySelector('.wrap').getBoundingClientRect();
+
+  const centerY = midRect.top + midRect.height / 2;
+  const offset = centerY - wrapRect.top - btn.offsetHeight / 2;
+
+  btn.style.marginTop = offset + 'px';
+}
+
+window.addEventListener('load', alignButtonToMid);
+window.addEventListener('resize', alignButtonToMid);
+
+
 function shuffleTeams() {
   const roles = [
     ['top','top1','top2'],
