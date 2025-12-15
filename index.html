@@ -7,29 +7,38 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background:#020617;
+      background: radial-gradient(circle at top, #020617, #000);
       min-height:100vh;
       margin:0;
       display:flex;
       justify-content:center;
       align-items:center;
+      overflow:hidden;
     }
     .wrap {
       display:flex;
-      gap:40px;
-      align-items:flex-start;
+      gap:60px;
+      align-items:center;
       justify-content:center;
-      transform: translateY(40px);
     }
-    table { border-collapse: collapse; min-width:260px; background:#0f172a; box-shadow:0 20px 40px rgba(0,0,0,.6); }
+    table {
+      border-collapse: collapse;
+      min-width:260px;
+      background: linear-gradient(180deg, #020617, #0f172a);
+      box-shadow: 0 20px 60px rgba(0,0,0,.7);
+    }
     th, td { border:1px solid #334155; padding:8px 12px; text-align:center; font-weight:bold; color:#e5e7eb; }
-    th { background:#020617; }
-    input {
+    th {
       background:#020617;
-      border:1px solid #475569;
       color:#e5e7eb;
-      padding:6px 8px;
-      border-radius:6px;
+      letter-spacing:1px;
+    }
+    input {
+      background: linear-gradient(180deg, #020617, #020617);
+      border:1px solid #334155;
+      color:#e5e7eb;
+      padding:8px 10px;
+      border-radius:8px;
       width:100%;
     }
     input:focus {
@@ -40,15 +49,15 @@
     .red { background:#7f1d1d; }
     .blue { background:#1e3a8a; }
     button {
-      padding: 26px 44px;
-      font-size: 22px;
+      padding: 28px 54px;
+      font-size: 24px;
       font-weight: 900;
       cursor: pointer;
       background: linear-gradient(135deg, #1e3a8a, #2563eb);
       color: #e5e7eb;
-      border: 2px solid #facc15;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(37,99,235,0.55);
+      border: 3px solid #facc15;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(37,99,235,0.8);
     }
     button:hover {
       transform: scale(1.07);
@@ -61,8 +70,9 @@
 
     .center-btn {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      margin: 0 10px;
     }
   </style>
 </head>
@@ -87,6 +97,11 @@
   <div id="centerBtn" class="center-btn">
     <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
   </div>
+
+  <table>
+    <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
+    <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
+  </table>
 
   <!-- 결과 테이블 -->
   <table>
