@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background:#f3f4f6;
+      background:#020617;
       min-height:100vh;
       margin:0;
       display:flex;
@@ -21,27 +21,43 @@
       justify-content:center;
       transform: translateY(40px);
     }
-    table { border-collapse: collapse; min-width:260px; background:#fff; }
-    th, td { border:1px solid #000; padding:8px 12px; text-align:center; font-weight:bold; }
-    th { background:#e5e7eb; }
-    .red { background:#fca5a5; }
-    .blue { background:#93c5fd; }
+    table { border-collapse: collapse; min-width:260px; background:#0f172a; box-shadow:0 20px 40px rgba(0,0,0,.6); }
+    th, td { border:1px solid #334155; padding:8px 12px; text-align:center; font-weight:bold; color:#e5e7eb; }
+    th { background:#020617; }
+    input {
+      background:#020617;
+      border:1px solid #475569;
+      color:#e5e7eb;
+      padding:6px 8px;
+      border-radius:6px;
+      width:100%;
+    }
+    input:focus {
+      outline:none;
+      border-color:#3b82f6;
+      box-shadow:0 0 0 1px #3b82f6;
+    }
+    .red { background:#7f1d1d; }
+    .blue { background:#1e3a8a; }
     button {
-      padding: 20px 36px;
-      font-size: 20px;
-      font-weight: 800;
+      padding: 26px 44px;
+      font-size: 22px;
+      font-weight: 900;
       cursor: pointer;
       background: linear-gradient(135deg, #1e3a8a, #2563eb);
       color: #e5e7eb;
-      border: none;
-      border-radius: 14px;
-      box-shadow: 0 10px 25px rgba(37,99,235,0.45);
+      border: 2px solid #facc15;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(37,99,235,0.55);
     }
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 14px 35px rgba(37,99,235,0.65);
+      transform: scale(1.07);
+      box-shadow: 0 16px 40px rgba(37,99,235,0.75);
     }
     button:active {
+      transform: scale(0.97);
+    }
+  </style>
       transform: scale(0.98);
     }
 
@@ -56,44 +72,28 @@
 
 <div class="wrap">
   <!-- 입력 테이블 -->
-<table>
-  <tr><th colspan="3">멤버 적는곳</th></tr>
-
-  <tr>
-    <th>탑</th>
-    <td><input id="top1"></td>
-    <td><input id="top2"></td>
-  </tr>
-
-  <tr>
-    <th>정글</th>
-    <td><input id="jg1"></td>
-    <td><input id="jg2"></td>
-  </tr>
-
-  <tr id="mid-row">
-    <th>미드</th>
-    <td><input id="mid1"></td>
-    <td><input id="mid2"></td>
-  </tr>
-
-  <tr>
-    <th>원딜</th>
-    <td><input id="adc1"></td>
-    <td><input id="adc2"></td>
-  </tr>
-
-  <tr>
-    <th>서폿</th>
-    <td><input id="sup1"></td>
-    <td><input id="sup2"></td>
-  </tr>
-</table>
+  <table>
+    <tr><th colspan="3">멤버 적는곳</th></tr>
+    <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
+    <tr><th>정글</th><td><input id="jg1"></td><td><input id="jg2"></td></tr>
+    <tr id="mid-row">
+      <th>미드</th>
+      <td><input id="mid1"></td>
+      <td><input id="mid2"></td>
+    </tr>
+    <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
+    <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
+  </table>
 
   <!-- 중앙 버튼 -->
   <div id="centerBtn" class="center-btn">
     <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
   </div>
+
+  <table>
+    <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
+    <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
+  </table>
 
   <!-- 결과 테이블 -->
   <table>
