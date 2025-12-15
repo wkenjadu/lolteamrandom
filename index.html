@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>롤 5:5 랜덤팀 나누기</title>
+  <title>롤 포지션 랜덤 팀</title>
   <style>
     body { font-family: Arial, sans-serif; background:#f3f4f6; padding:40px; }
     .wrap { display:flex; gap:40px; align-items:flex-start; justify-content:center; }
@@ -14,6 +14,13 @@
     .blue { background:#93c5fd; }
     .result { background:#bfdbfe; }
     button { padding:14px 30px; font-size:16px; font-weight:bold; cursor:pointer; }
+    .fade {
+      animation: fadeSwap 0.6s ease-in-out;
+    }
+    @keyframes fadeSwap {
+      0% { opacity: 0; transform: translateY(-6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -21,7 +28,7 @@
 <div class="wrap">
   <!-- 입력 테이블 -->
   <table>
-    <tr><th colspan="3">멤버 적는곳</th></tr>
+    <tr><th></th><th class="red">레드</th><th class="blue">블루</th></tr>
     <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
     <tr><th>정글</th><td><input id="jg1"></td><td><input id="jg2"></td></tr>
     <tr><th>미드</th><td><input id="mid1"></td><td><input id="mid2"></td></tr>
@@ -33,7 +40,7 @@
 
   <!-- 결과 테이블 -->
   <table>
-    <tr><th></th><th class="red">레드</th><th class="blue">블루</th></tr>
+    <tr><th colspan="3">멤버 적군</th></tr>
     <tr><th>탑</th><td id="r_top"></td><td id="b_top"></td></tr>
     <tr><th>정글</th><td id="r_jg"></td><td id="b_jg"></td></tr>
     <tr><th>미드</th><td id="r_mid"></td><td id="b_mid"></td></tr>
@@ -56,6 +63,27 @@ function shuffleTeams() {
     const p1 = document.getElementById(a).value.trim();
     const p2 = document.getElementById(b).value.trim();
     if (!p1 || !p2) { alert('모든 포지션에 2명씩 입력하세요'); return; }
+
+    const rCell = document.getElementById('r_'+key);
+    const bCell = document.getElementById('b_'+key);
+
+    rCell.classList.remove('fade');
+    bCell.classList.remove('fade');
+
+    if (Math.random() < 0.5) {
+      rCell.innerText = p1;
+      bCell.innerText = p2;
+    } else {
+      rCell.innerText = p2;
+      bCell.innerText = p1;
+    }
+
+    // 애니메이션 재적용
+    void rCell.offsetWidth;
+    rCell.classList.add('fade');
+    bCell.classList.add('fade');
+  }
+}
     if (Math.random() < 0.5) {
       document.getElementById('r_'+key).innerText = p1;
       document.getElementById('b_'+key).innerText = p2;
