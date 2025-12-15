@@ -4,68 +4,86 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>롤 5:5 랜덤팀 나누기</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       background: radial-gradient(circle at top, #020617, #000);
-      min-height:100vh;
-      margin:0;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
+
     .wrap {
-      display:flex;
-      gap:60px;
-      align-items:flex-start;
-      justify-content:center;
+      display: flex;
+      gap: 60px;
+      align-items: center;
     }
-table {
-  border-collapse: collapse;
-  min-width: 260px;
-  background: linear-gradient(180deg, #020617, #0b1220);
-  border: 1px solid #1e293b;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,215,0,0.08),
-    0 20px 60px rgba(0,0,0,.8);
-}
+
+    table {
+      border-collapse: collapse;
+      min-width: 280px;
+      background: linear-gradient(180deg, #020617, #0b1220);
+      border: 1px solid #1e293b;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,215,0,0.08),
+        0 20px 60px rgba(0,0,0,.8);
+    }
 
     th, td {
-      border:1px solid #334155;
-      padding:8px 12px;
-      text-align:center;
-      font-weight:bold;
-      color:#e5e7eb;
+      border: 1px solid #1e293b;
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: bold;
+      color: #e5e7eb;
     }
-    th {
-      background:#020617;
-      letter-spacing:1px;
-    }
-input {
-  background: #020617;
-  border: 1px solid #334155;
-  color: #e5e7eb;
-  padding: 8px 10px;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
 
+    th {
+      background: linear-gradient(180deg, #0f172a, #020617);
+      color: #facc15;
+      letter-spacing: 1px;
+      font-size: 14px;
+      text-shadow: 0 0 6px rgba(250,204,21,.4);
     }
+
+    input {
+      background: linear-gradient(180deg, #020617, #020617);
+      border: 1px solid #1e293b;
+      color: #e5e7eb;
+      padding: 8px 12px;
+      border-radius: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-weight: bold;
+      text-align: center;
+      transition: all .2s ease;
+    }
+
     input:focus {
-      outline:none;
-      border-color:#3b82f6;
-      box-shadow:0 0 0 1px #3b82f6;
+      outline: none;
+      border-color: #facc15;
+      box-shadow:
+        0 0 0 1px rgba(250,204,21,.8),
+        0 0 14px rgba(250,204,21,.6);
     }
-    .red { background:#7f1d1d; }
-    .blue { background:#1e3a8a; }
+
+    .red {
+      background: linear-gradient(180deg, #7f1d1d, #450a0a);
+      color: #fecaca;
+    }
+
+    .blue {
+      background: linear-gradient(180deg, #1e3a8a, #020617);
+      color: #bfdbfe;
+    }
 
     .center-btn {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding-top:120px; /* 미드 높이 기준 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     button {
@@ -76,20 +94,29 @@ input {
       background: linear-gradient(135deg, #1e3a8a, #2563eb);
       color: #e5e7eb;
       border: 3px solid #facc15;
-      border-radius: 20px;
-      box-shadow: 0 0 40px rgba(37,99,235,0.8);
+      border-radius: 22px;
+      box-shadow:
+        0 0 30px rgba(37,99,235,0.8),
+        inset 0 0 10px rgba(250,204,21,.25);
+      transition: all .2s ease;
     }
+
     button:hover {
-      transform: scale(1.07);
+      transform: scale(1.06);
+      box-shadow:
+        0 0 45px rgba(37,99,235,1),
+        inset 0 0 14px rgba(250,204,21,.4);
     }
+
     button:active {
       transform: scale(0.97);
     }
   </style>
 </head>
-<body>
 
+<body>
 <div class="wrap">
+
   <!-- 입력 테이블 -->
   <table>
     <tr><th colspan="3">멤버 적는곳</th></tr>
@@ -102,7 +129,7 @@ input {
 
   <!-- 중앙 버튼 -->
   <div class="center-btn">
-    <button type="button" onclick="shuffleTeams()">🎲 랜덤 섞기</button>
+    <button onclick="shuffleTeams()">🎲 랜덤 섞기</button>
   </div>
 
   <!-- 결과 테이블 -->
@@ -114,6 +141,7 @@ input {
     <tr><th>원딜</th><td id="r_adc"></td><td id="b_adc"></td></tr>
     <tr><th>서폿</th><td id="r_sup"></td><td id="b_sup"></td></tr>
   </table>
+
 </div>
 
 <script>
@@ -148,6 +176,5 @@ function shuffleTeams() {
   }
 }
 </script>
-
 </body>
 </html>
