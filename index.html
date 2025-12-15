@@ -3,174 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>롤 5:5 랜덤 팀 나누기</title>
+  <title>롤 5:5 랜덤팀 나누기</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #020617;
-      padding: 24px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      resize: none;
-      font-size: 14px;
-    }
-    button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1d4ed8;
-    }
-    .teams {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .team {
-      flex: 1;
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      padding: 12px;
-    }
-    .team h2 {
-      text-align: center;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      padding: 6px 0;
-      text-align: center;
-    }
+    body { font-family: Arial, sans-serif; background:#f3f4f6; padding:40px; }
+    .wrap { display:flex; gap:40px; align-items:flex-start; justify-content:center; }
+    table { border-collapse: collapse; min-width:260px; }
+    th, td { border:1px solid #000; padding:8px 12px; text-align:center; font-weight:bold; }
+    th { background:#e5e7eb; }
+    .red { background:#fca5a5; }
+    .blue { background:#93c5fd; }
+    .result { background:#bfdbfe; }
+    button { padding:14px 30px; font-size:16px; font-weight:bold; cursor:pointer; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>롤 5:5 랜덤 팀 나누기</h1>
-    <p>포지션별로 닉네임을 입력하세요 (각 포지션 2명)</p>
-    <textarea id="top" placeholder="TOP
-탑유저1
-탑유저2"></textarea>
-    <textarea id="jungle" placeholder="JUNGLE
-정글유저1
-정글유저2"></textarea>
-    <textarea id="mid" placeholder="MID
-미드유저1
-미드유저2"></textarea>
-    <textarea id="adc" placeholder="ADC
-원딜유저1
-원딜유저2"></textarea>
-    <textarea id="support" placeholder="SUPPORT
-서폿유저1
-서폿유저2"></textarea>
-    <button onclick="makeTeams()">랜덤 팀 생성</button>
-    <button onclick="reshuffle()" style="background:#334155; margin-top:8px;">다시 섞기</button>
 
-    <div class="teams" id="result" style="display:none;">
-      <div class="team">
-        <h2>블루 팀</h2>
-        <ul id="teamA"></ul>
-      </div>
-      <div class="team">
-        <h2>레드 팀</h2>
-        <ul id="teamB"></ul>
-      </div>
-    </div>
-  </div>
+<div class="wrap">
+  <!-- 입력 테이블 -->
+  <table>
+    <tr><th></th><th class="red">레드</th><th class="blue">블루</th></tr>
+    <tr><th>탑</th><td><input id="top1"></td><td><input id="top2"></td></tr>
+    <tr><th>정글</th><td><input id="jg1"></td><td><input id="jg2"></td></tr>
+    <tr><th>미드</th><td><input id="mid1"></td><td><input id="mid2"></td></tr>
+    <tr><th>원딜</th><td><input id="adc1"></td><td><input id="adc2"></td></tr>
+    <tr><th>서폿</th><td><input id="sup1"></td><td><input id="sup2"></td></tr>
+  </table>
 
-  <script>
-    let lastPlayers = null;
+  <button onclick="shuffleTeams()">랜덤 섞기</button>
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
+  <!-- 결과 테이블 -->
+  <table>
+    <tr><th colspan="3">멤버 적군</th></tr>
+    <tr><th>탑</th><td id="r_top"></td><td id="b_top"></td></tr>
+    <tr><th>정글</th><td id="r_jg"></td><td id="b_jg"></td></tr>
+    <tr><th>미드</th><td id="r_mid"></td><td id="b_mid"></td></tr>
+    <tr><th>원딜</th><td id="r_adc"></td><td id="b_adc"></td></tr>
+    <tr><th>서폿</th><td id="r_sup"></td><td id="b_sup"></td></tr>
+  </table>
+</div>
+
+<script>
+function shuffleTeams() {
+  const roles = [
+    ['top','top1','top2'],
+    ['jg','jg1','jg2'],
+    ['mid','mid1','mid2'],
+    ['adc','adc1','adc2'],
+    ['sup','sup1','sup2']
+  ];
+
+  for (const [key,a,b] of roles) {
+    const p1 = document.getElementById(a).value.trim();
+    const p2 = document.getElementById(b).value.trim();
+    if (!p1 || !p2) { alert('모든 포지션에 2명씩 입력하세요'); return; }
+    if (Math.random() < 0.5) {
+      document.getElementById('r_'+key).innerText = p1;
+      document.getElementById('b_'+key).innerText = p2;
+    } else {
+      document.getElementById('r_'+key).innerText = p2;
+      document.getElementById('b_'+key).innerText = p1;
     }
+  }
+}
+</script>
 
-    function readPlayers(id) {
-      return document
-        .getElementById(id)
-        .value
-        .split('
-')
-        .map(v => v.trim())
-        .filter(v => v.length > 0);
-    }
-
-    function makeTeams() {
-      const positions = ['top', 'jungle', 'mid', 'adc', 'support'];
-      const data = {};
-
-      for (const pos of positions) {
-        const players = readPlayers(pos);
-        if (players.length !== 2) {
-          alert(pos.toUpperCase() + ' 포지션은 정확히 2명이어야 합니다');
-          return;
-        }
-        data[pos] = players;
-      }
-
-      lastPlayers = JSON.parse(JSON.stringify(data));
-      generateTeams(data);
-    }
-
-    function reshuffle() {
-      if (!lastPlayers) {
-        alert('먼저 팀을 생성해주세요');
-        return;
-      }
-      generateTeams(JSON.parse(JSON.stringify(lastPlayers)));
-    }
-
-    function generateTeams(data) {
-      const teamA = [];
-      const teamB = [];
-
-      for (const pos in data) {
-        shuffle(data[pos]);
-        teamA.push(`${pos.toUpperCase()}: ${data[pos][0]}`);
-        teamB.push(`${pos.toUpperCase()}: ${data[pos][1]}`);
-      }
-
-      document.getElementById('teamA').innerHTML = teamA.map(v => `<li>${v}</li>`).join('');
-      document.getElementById('teamB').innerHTML = teamB.map(v => `<li>${v}</li>`).join('');
-      document.getElementById('result').style.display = 'flex';
-    }
-  </script>
 </body>
 </html>
