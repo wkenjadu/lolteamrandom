@@ -13,6 +13,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 🔮 배경 연기 효과 */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(59,130,246,0.08), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(99,102,241,0.07), transparent 45%);
+  animation: smokeMove 18s linear infinite;
+  pointer-events: none;
+}
+
+body::after {
+  animation-duration: 26s;
+  opacity: 0.6;
+}
+
+@keyframes smokeMove {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(-5%, -8%) scale(1.05); }
+  100% { transform: translate(0,0) scale(1); }
 }
 
 /* 전체 레이아웃 */
@@ -20,6 +46,8 @@ body {
   display: flex;
   gap: 50px;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* 테이블 */
@@ -76,10 +104,12 @@ button {
   border: 3px solid #facc15;
   border-radius: 20px;
   box-shadow: 0 0 35px rgba(37,99,235,0.7);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
 button:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 45px rgba(59,130,246,.9);
 }
 
 /* 결과 색 */
